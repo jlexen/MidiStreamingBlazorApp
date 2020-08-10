@@ -1,0 +1,59 @@
+﻿@using fnix.alpha.Models
+
+
+    <h3>Choose a Keyboard size</h3>
+    <div style="margin-bottom: 1em">        
+        <input type="button" checked class="@getCSS(88)" value="88" @onclick="@(e => Apply(88))" />
+        <input type="button" class="@getCSS(76)" value="76" @onclick="@(e => Apply(76))" />
+        <input type="button" class="@getCSS(61)" value="61" @onclick="@(e => Apply(61))" />
+        <input type="button" class="@getCSS(49)" value="49" @onclick="@(e => Apply(49))" />
+        <input type="button" class="@getCSS(37)" value="37" @onclick="@(e => Apply(37))" />
+        <input type="button" class="@getCSS(25)" value="25" @onclick="@(e => Apply(25))" />
+    </div>
+
+
+@code {
+    [Parameter]
+    public KeyboardData KeyboardData { get; set; }
+
+    [Parameter]
+    public EventCallback<KeyboardData> KeyboardDataChanged { get; set; }
+
+    private Dictionary<int, bool> cssDict;
+
+    private string getCSS(int value)
+    {
+        if(cssDict[value])
+        {
+            return "button-toggle active";
+        }
+
+        return "button-toggle";
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+        KeyboardData.KeyCount = 88;
+        cssDict = new Dictionary<int, bool>
+    {
+            { 88, true },
+            { 76, false },
+            { 61, false },
+            { 49, false },
+            { 37, false },
+            { 25, false },
+    };
+
+        return base.OnInitializedAsync();
+    }
+
+    private Task Apply(int value)
+    {
+        cssDict[KeyboardData.KeyCount] = false;
+        KeyboardData.KeyCount = value;
+
+        cssDict[KeyboardData.KeyCount] = true;
+
+        return KeyboardDataChanged.InvokeAsync(KeyboardData);
+    }
+}

@@ -1,0 +1,320 @@
+/* Global Settings */
+html, body {
+    font-family: Garamond, Baskerville, 'Baskerville Old Face';
+    font-size: 1.1em;
+    margin: 0px;
+}
+
+*:focus {
+    outline: none; /* remove blue outline that chrome always adds */
+}
+
+/* Remove underline for links */
+a {
+    text-decoration: none
+}
+
+    /* Remove purple for visited link */
+    a:visited {
+        color: black;
+    }
+
+app {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Layout */
+.container-fluid {
+    padding: 0;
+    width: 100%;
+}
+
+.landing-split {
+    height: 100%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.landing-left-panel {
+    left: 0;
+}
+
+.landing-right-panel {
+    right: 0;
+}
+
+.landing-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+    .landing-center .landing-panel-content {
+        border-radius: 50%;
+    }
+
+.margin-top-15 {
+    margin-top: 15px;
+}
+
+/* Error Pages */
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
+
+/* Navigation Bar */
+.navigationBar {
+    position: absolute;
+    z-index: 10;
+    display: inline-block;
+}
+
+.navigationItem {
+    margin: .5em;
+    padding-right: 10px;
+    padding-left: 10px;
+    display: block;
+    float: left;
+    color: #3C5C6E;
+    border-bottom-color: white;
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+}
+
+    .navigationItem:hover {
+        /*border-bottom-color: #3C5C6E;
+            border-bottom-style: solid;
+            border-bottom-width: 2px;*/
+    }
+
+hr.headerLine {
+    background-color: #3C5C6E;
+    height: 2px;
+    width: calc(100% - 1em);
+    border-style: none;
+    clear: left;
+    margin-left: .5em;
+    margin-right: .5em;
+}
+
+/* Header related */
+h1 {
+    font-size: 1.3em;
+    letter-spacing: 3px;
+}
+
+/* Input/button Related */
+
+.button-toggle {
+    overflow: hidden;
+    margin: 0;
+}
+
+.button-toggle {
+    background-color: #e0f3ff;
+    line-height: 1;
+    text-align: center;
+    padding: 8px 16px;
+    margin-right: -1px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+    transition: all 0.1s ease-in-out;
+}
+
+    .button-toggle.active {
+        background-color: #2f4755;
+        box-shadow: none;
+        color: white;
+    }
+
+    .button-toggle:hover {
+        cursor: pointer;
+        background-color: #5785a0;
+    }
+
+    .button-toggle:first-of-type {
+        border-radius: 4px 0 0 4px;
+    }
+
+    .button-toggle:last-of-type {
+        border-radius: 0 4px 4px 0;
+    }
+
+input {
+    margin: 4px;
+    padding: 4px;
+    border-style: solid; /* override outset chrome default */
+}
+
+    input[type=button] {
+        border-radius: 4px;
+        border-top-width: 1px;
+        border-bottom-width: 1px;
+        border-left-width: 2px; /*  Point is here to add a little weight to button */
+        border-right-width: 2px;
+        padding-left: 7px;
+        padding-right: 7px;
+        letter-spacing: 3px;
+    }
+
+        input[type=button].buttonA {
+            background-color: #3C5C6E;
+            border-color: #2f4755;
+            color: white;
+        }
+
+            input[type=button].buttonA:hover {
+                background-color: #2f4755;
+            }
+
+        input[type=button].buttonB {
+            background-color: white;
+            border-color: #2f4755;
+            color: #3C5C6E;
+        }
+
+            input[type=button].buttonB:hover {
+                background-color: #f4f5f5;
+            }
+
+            input[type=button].buttonB:disabled {
+                background: #dddddd;
+            }
+
+    input[type=text] {
+        border-width: 0px;
+        background-color: #f4f5f5;
+        text-align: center;
+    }
+
+/* Key Classes */
+.key {
+    display: block;
+    float: left;
+    border: 1px;
+    border-color: black;
+    border-style: solid;
+    width: 20px;
+    margin-left: -2px;
+    position: relative;
+    transition-duration: .5s;
+    transition-timing-function: ease-out;
+}
+
+    .key:active {
+        transition: none;
+    }
+
+.white-key {
+    background-color: white;
+    height: 80px;
+    width: 20px;
+    z-index: 1;
+}
+
+    .white-key:hover {
+        background-color: lightgray;
+    }
+
+    .white-key:active {
+        background-color: red;
+        color: rgba(255, 255, 255, 1);
+        box-shadow: 0 5px 15px rgba(145, 92, 182, .4);
+    }
+
+.left-black-key {
+    margin-left: -10px;
+}
+
+.black-key {
+    background-color: black;
+    height: 50px;
+    width: 15px;
+    margin-left: -6px;
+    z-index: 10;
+}
+
+    .black-key:hover {
+        background-color: darkgsray;
+    }
+
+    .black-key:active {
+        background-color: red;
+        color: rgba(255, 255, 255, 1);
+        box-shadow: 0 5px 15px rgba(145, 92, 182, .4);
+    }
+
+.key-played {
+    background-color: red;
+    color: rgba(255, 255, 255, 1);
+    box-shadow: 0 5px 15px rgba(145, 92, 182, .4);
+}
+
+.middle-c-marker {
+    display: block;
+    float: left;
+    position: relative;
+    z-index: 10;
+    background-color: black;
+    height: 10px;
+    width: 10px;
+    border-radius: 100%;
+    margin-left: -16px;
+    pointer-events: none;
+    margin-top: 65px;
+}
+
+.fnixMusicIcon {
+    background-image: url('../images/FNIXmusicIcon.svg');
+    height: 50px;
+    width: 100px;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera and Firefox */
+}
+
+.float-right {
+    float: right;
+}
+
+.margin-top-30 {
+    margin-top: 30px;
+}
+
+#footer-layout {
+    position: fixed;
+    bottom: 5px;
+    right: 5px;
+    font-size: 0.82em;
+}

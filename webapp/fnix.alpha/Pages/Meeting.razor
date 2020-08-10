@@ -1,0 +1,93 @@
+﻿@page "/meeting/{Meetingid:int}"
+
+@using Microsoft.AspNetCore.SignalR.Client
+@using fnix.alpha.Enums
+@using fnix.alpha.Models
+@using Microsoft.AspNetCore.SignalR
+@using fnix.alpha.SignalR
+
+
+@inject NavigationManager NavigationManager;
+@inject IHubContext<MidiHub, ITypedMidiHubClient> _hubContext;
+@inject IJSRuntime JSRuntime;
+
+<div style="padding-top: 4em; margin: auto; width: 80%;">
+    <input type="button" @onclick="OnMeetingDownloadButtonClicked" class="float-right buttonA margin-top-30" value="Download Service" />
+    <input type="button" @onclick="OnCopyMeetingUrlClicked" class="float-right buttonA margin-top-30" value="Copy Meeting URL" />
+    <KeyboardSizePicker @bind-KeyboardData="KeyboardData"></KeyboardSizePicker>
+
+    <div>
+        <CascadingValue Value="@KeysPressed">
+            @for (var i = KeyboardData.StartKey; i <= KeyboardData.EndKey; i++)
+            {
+                <PianoKey NoteOnCallback="NoteOn" NoteOffCallback="NoteOff" Note=i />
+            }
+        </CascadingValue>
+    </div>
+</div>
+
+@code
+{
+    private const string ServiceLinkUrl = "https://fnixalphaclient.blob.core.windows.net/fnixalphaclient/fnix.alpha.client.exe";
+
+    [Parameter]
+    public int MeetingId { get; set; }
+
+    public KeyboardData KeyboardData = new KeyboardData();
+
+    public byte[] KeysPressed { get; set; } = new byte[108];
+
+    private HubConnection _hubConnection;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri("/midiHub"))
+            .Build();
+
+        _hubConnection.On<int, int, EventType>("SendNote", (meetingId, note, eventType) =>
+        {
+            if (meetingId != this.MeetingId) return;
+
+            if (KeysPressed != null && KeysPressed.Length - 1 >= note)
+            {
+                if (eventType == EventType.NoteOn && this.KeysPressed[note] == 0)
+                {
+                    this.KeysPressed[note] = 1;
+                    StateHasChanged();
+                }
+                else if (eventType == EventType.NoteOff && this.KeysPressed[note] == 1)
+                {
+                    this.KeysPressed[note] = 0;
+                    StateHasChanged();
+                }
+            }
+        });
+
+        await _hubConnection.StartAsync();
+    }
+
+    public void OnMeetingDownloadButtonClicked()
+    {
+        NavigationManager.NavigateTo(ServiceLinkUrl);
+    }
+
+    public async Task OnCopyMeetingUrlClicked()
+    {
+        var currentUri = NavigationManager.Uri;
+        //await JSRuntime.InvokeVoidAsync("clipboardCopy.copyText", currentUri);
+        var arr = new string[] { currentUri };
+        await JSRuntime.InvokeAsync<string>("copyTextToClipboard", arr);
+    }
+
+    private async Task NoteOn(int note)
+    {
+        await _hubContext.Clients.All.SendNote(MeetingId, note, EventType.NoteOn);
+    }
+
+    private async Task NoteOff(int note)
+    {
+        await _hubContext.Clients.All.SendNote(MeetingId, note, EventType.NoteOff);
+    }
+
+}

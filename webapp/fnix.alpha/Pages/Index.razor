@@ -1,0 +1,38 @@
+﻿@page "/"
+@namespace fnix.alpha.Pages
+@inject NavigationManager NavigationManager
+
+@code
+    {
+    private int? MeetingId { get; set; }
+
+    private void GoToMeeting()
+    {        
+        NavigationManager.NavigateTo("meeting/" + MeetingId);
+    }
+
+    private void CreateMeeting()
+    {
+        var meetingId = new System.Random().Next(1000000, 10000000);
+        NavigationManager.NavigateTo("meeting/" + meetingId);
+    }
+}
+
+<div class="landing-split landing-left-panel">
+    <div class="landing-center">
+        <div class="landing-panel-content">
+            <h1>Create a meeting</h1>
+            <input type="button" class="buttonA margin-top-15" value="Create Meeting" @onclick="CreateMeeting" />
+        </div>
+    </div>
+</div>
+
+<div class="landing-split landing-right-panel">
+    <div class="landing-center">
+        <div class="landing-panel-content">
+            <h1>Join a meeting</h1>
+            <input type="text" class="form-control" @bind="MeetingId" placeholder="Meeting #">
+            <input type="button" class="buttonB margin-top-15" value="Go" disabled="@(!MeetingId.HasValue)" @onclick="GoToMeeting" />
+        </div>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+﻿@* Obtained from https://docs.microsoft.com/en-us/aspnet/core/blazor/forms-validation?view=aspnetcore-3.1  *@
+@using System.Globalization
+@using System.Reflection.Metadata
+@using fnix.alpha.Models
+@typeparam TValue
+@inherits InputBase<TValue>
+
+<input @attributes="AdditionalAttributes" type="radio" value="@SelectedValue" id="@($"radio{SelectedValue}")"
+       checked="@(SelectedValue.Equals(Value))" @onchange="OnChange" />
+<label for="@($"radio{SelectedValue}")">@SelectedValue</label>
+
+@code {
+    [Parameter]
+    public TValue SelectedValue { get; set; }
+
+    [Parameter]
+    public bool IsChecked { get; set; }
+
+    private void OnChange(ChangeEventArgs args)
+    {
+        CurrentValueAsString = args.Value.ToString();
+    }
+
+    protected override bool TryParseValueFromString(string value,
+        out TValue result, out string errorMessage)
+    {
+        var success = BindConverter.TryConvertTo<TValue>(
+            value, CultureInfo.CurrentCulture, out var parsedValue);
+        if (success)
+        {
+            result = parsedValue;
+            errorMessage = null;
+
+            return true;
+        }
+        else
+        {
+            result = default;
+            errorMessage = $"{FieldIdentifier.FieldName} field isn't valid.";
+
+            return false;
+        }
+    }
+}

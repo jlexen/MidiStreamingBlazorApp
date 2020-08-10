@@ -1,0 +1,57 @@
+﻿<div class="@calcCSS()" @onmousedown="OnNoteOn" @onmouseup="OnNoteOff" @onmouseout="OnNoteOff" >
+</div>
+@if (Note == MiddleCNote)
+{
+    <a class="middle-c-marker"></a>
+}
+
+@code {
+    private const int MiddleCNote = 60;
+
+    [Parameter]
+    public int Note { get; set; }
+
+    [Parameter]
+    public EventCallback<int> NoteOnCallback { get; set; }
+
+    [Parameter]
+    public EventCallback<int> NoteOffCallback { get; set; }
+
+    [CascadingParameter]
+    public byte[] KeysPressed { get; set; }
+
+    public Task OnNoteOn()
+    {
+        return NoteOnCallback.InvokeAsync(Note);
+    }
+
+    public Task OnNoteOff()
+    {
+        return NoteOffCallback.InvokeAsync(Note);
+    }
+
+    private string calcCSS()
+    {
+        string css = "key noselect ";
+        var noteBase = Note % 12;
+        if (noteBase == 1 || noteBase == 3 || noteBase == 6 || noteBase == 8 || noteBase == 10)
+        {
+            css += "black-key";
+        }
+        else
+        {
+            css += "white-key";
+            if (noteBase == 2 || noteBase == 4 || noteBase == 7 || noteBase == 9 || noteBase == 11)
+            {
+                css += " left-black-key";
+            }
+        }
+
+        if (KeysPressed != null && KeysPressed.Length - 1 >= Note && KeysPressed?[Note] == 1)
+        {
+            css += " key-played";
+        }
+
+        return css;
+    }
+}
