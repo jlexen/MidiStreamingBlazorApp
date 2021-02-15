@@ -14,4 +14,4 @@ The console app is to be run on a computer or device running Windows 10 that is 
 
 ### Web Application
 
-This application allows users to create "Meetings" and share a meeting link with others in order to collaborate with a shared virtual keyboard. As users running the console applicaiton above play notes, their key presses will appear for every member in the meeting to see.
+This application allows users to create "Meetings" and share a meeting link with others in order to collaborate with a shared virtual keyboard. As users running the console application above play notes, their key presses will appear for every member in the meeting to see.
