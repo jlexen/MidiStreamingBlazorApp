@@ -32,26 +32,27 @@
 
     private string calcCSS()
     {
-        string css = "key noselect ";
+        var cssClasses = new List<string> { "key", "noselect" };
+
         var noteBase = Note % 12;
         if (noteBase == 1 || noteBase == 3 || noteBase == 6 || noteBase == 8 || noteBase == 10)
         {
-            css += "black-key";
+            cssClasses.Add("black-key");
         }
         else
         {
-            css += "white-key";
+            cssClasses.Add("white-key");
             if (noteBase == 2 || noteBase == 4 || noteBase == 7 || noteBase == 9 || noteBase == 11)
             {
-                css += " left-black-key";
+                cssClasses.Add("left-black-key");
             }
         }
 
         if (KeysPressed != null && KeysPressed.Length - 1 >= Note && KeysPressed?[Note] == 1)
         {
-            css += " key-played";
+            cssClasses.Add("key-played");
         }
 
-        return css;
+        return string.Join(" ", cssClasses);
     }
 }

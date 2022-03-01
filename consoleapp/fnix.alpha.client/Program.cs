@@ -10,7 +10,8 @@ namespace fnix.alpha.client
 
         static void Main(string[] args)
         {
-            var midiEventStreamService = new MidiEventStreamService("https://fnixalphadev.azurewebsites.net/");
+            string url = "https://localhost:44362"; // https://fnixalphadev.azurewebsites.net/
+            var midiEventStreamService = new MidiEventStreamService(url);
             _midiDeviceService = new MidiDeviceService(midiEventStreamService);
 
             GetMeetingId();

@@ -27,7 +27,7 @@ namespace fnix.alpha.client.Services
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 var uri = new Uri($"{_streamURL}/api/Midi/{meetingId}");
-                await _httpClient.SendAsync(new HttpRequestMessage()
+                var response = await _httpClient.SendAsync(new HttpRequestMessage()
                 {
                     RequestUri = uri,
                     Method = HttpMethod.Post,
