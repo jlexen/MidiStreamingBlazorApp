@@ -1,5 +1,5 @@
 # MidiStreamingBlazorApp
-This repo demonstrates the functionality of streaming MIDI events from an electronic piano keyboard to a Blazor web service which displays the notes being played real time. 
+This repo demonstrates the functionality of streaming MIDI events from an electronic piano keyboard to a dotnet web service which displays the notes being played real time. 
 
 ## Problem Being Solved
 The goal of the project is to provide a solution to the challenges of distance learning piano lessons. It is complicated for both teachers and students to complete piano lessons over the internet for a number of reasons, including the fact that both parties are not able to see the notes being played visually.
